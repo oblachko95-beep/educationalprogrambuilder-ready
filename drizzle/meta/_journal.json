@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1789386878460,
+      "tag": "0000_living_karnak",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1789471270836,
+      "tag": "0001_nostalgic_albert_cleary",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789554783375,
+      "tag": "0002_parched_catseye",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1789556048097,
+      "tag": "0003_uneven_fixer",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1789558997850,
+      "tag": "0004_bent_fantastic_four",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1789973799703,
+      "tag": "0005_lowly_krista_starr",
+      "breakpoints": true
+    }
+  ]
+}

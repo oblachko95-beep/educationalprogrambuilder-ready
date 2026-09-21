@@ -1,0 +1,1 @@
+ALTER TABLE `programs` ADD `field_comments` text DEFAULT '{}' NOT NULL;

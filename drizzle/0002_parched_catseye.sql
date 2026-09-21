@@ -1,0 +1,1 @@
+ALTER TABLE `programs` ADD `review_comment` text DEFAULT '' NOT NULL;

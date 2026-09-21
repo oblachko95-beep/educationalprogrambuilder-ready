@@ -1,0 +1,1 @@
+ALTER TABLE `user_profiles` ADD `acting_role` text DEFAULT 'admin' NOT NULL;
