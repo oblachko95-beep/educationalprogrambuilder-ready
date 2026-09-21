@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { roleLabels, type UserRole } from "@/lib/roles";
 
 type Mode = "login" | "register" | "forgot" | "reset";
@@ -96,18 +95,16 @@ export default function AuthForm({ mode, returnTo = "/", token = "" }: { mode: M
                   </div>
                   <div className="grid gap-2">
                     <Label>Желаемая роль</Label>
-                    <Select value={requestedRole} onValueChange={(value) => setRequestedRole(value as UserRole)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Object.entries(roleLabels).map(([value, label]) => (
-                          <SelectItem key={value} value={value}>{label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <p className="text-xs leading-relaxed text-muted-foreground">Это заявка на роль. Фактические права назначает администратор.</p>
-                  </div>
+<select
+  id="requestedRole"
+  value={requestedRole}
+  onChange={(event) => setRequestedRole(event.target.value as UserRole)}
+  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+>
+  {Object.entries(roleLabels).map(([value, label]) => (
+    <option key={value} value={value}>{label}</option>
+  ))}
+</select>
                 </>
               )}
               {mode !== "forgot" && (
