@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация — Конструктор образовательных программ</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f4f7fb;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 40px;
+      width: 100%;
+      max-width: 420px;
+    }
+    .logo {
+      width: 48px;
+      height: 48px;
+      background: #004C97;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .logo svg { width: 24px; height: 24px; stroke: white; }
+    h1 { font-size: 24px; font-weight: 600; margin-bottom: 8px; color: #14213d; }
+    .desc { color: #64748b; font-size: 15px; line-height: 1.5; margin-bottom: 28px; }
+    .field { margin-bottom: 20px; }
+    label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; color: #334155; }
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #004C97;
+      box-shadow: 0 0 0 3px rgba(0,76,151,0.1);
+    }
+    .hint {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: #004C97;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+    .btn:hover { background: #003d7a; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .links {
+      margin-top: 24px;
+      display: flex;
+      gap: 16px;
+      font-size: 14px;
+    }
+    .links a { color: #004C97; text-decoration: none; }
+    .links a:hover { text-decoration: underline; }
+    .error {
+      background: #fef2f2;
+      color: #dc2626;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .success {
+      background: #f0fdf4;
+      color: #16a34a;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+      </svg>
+    </div>
+    <h1>Регистрация</h1>
+    <p class="desc">Создайте личный кабинет. Фактическую роль после регистрации назначит администратор.</p>
+    
+    <div class="error" id="error"></div>
+    <div class="success" id="success"></div>
+    
+    <form id="registerForm">
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="displayName">ФИО или отображаемое имя</label>
+        <input type="text" id="displayName" name="displayName" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="requestedRole">Желаемая роль</label>
+        <select id="requestedRole" name="requestedRole">
+          <option value="author">Автор курса</option>
+          <option value="reviewer">Рецензент</option>
+          <option value="admin">Администратор</option>
+        </select>
+        <p class="hint">Это заявка на роль. Фактические права назначает администратор.</p>
+      </div>
+      <div class="field">
+        <label for="password">Пароль</label>
+        <input type="password" id="password" name="password" required autocomplete="new-password" minlength="8">
+        <p class="hint">Минимум 8 символов</p>
+      </div>
+      <button type="submit" class="btn" id="submitBtn">
+        <span>Зарегистрироваться</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </button>
+    </form>
+    
+    <div class="links">
+      <a href="/login.html">Войти</a>
+      <a href="/forgot-password.html">Забыли пароль?</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const errorEl = document.getElementById('error');
+    const successEl = document.getElementById('success');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // Получаем returnTo из URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const returnTo = urlParams.get('returnTo') || '/';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const displayName = document.getElementById('displayName').value;
+      const requestedRole = document.getElementById('requestedRole').value;
+      const password = document.getElementById('password').value;
+      
+      errorEl.style.display = 'none';
+      successEl.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Подождите...</span>';
+      
+      try {
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, displayName, requestedRole })
+        });
+        
+        const result = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(result.error || 'Не удалось зарегистрироваться');
+        }
+        
+        successEl.textContent = 'Регистрация успешна! Перенаправление на вход...';
+        successEl.style.display = 'block';
+        
+        setTimeout(() => {
+          window.location.href = '/login.html' + (returnTo !== '/' ? '?returnTo=' + encodeURIComponent(returnTo) : '');
+        }, 1500);
+        
+      } catch (err) {
+        errorEl.textContent = err.message || 'Не удалось зарегистрироваться';
+        errorEl.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Зарегистрироваться</span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>';
+      }
+    });
+  </script>
+</body>
+</html>
