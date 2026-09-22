@@ -1,8 +1,11 @@
-import { createD1Database } from "./providers/d1";
-
-export const STORAGE_MODE = "server" as const;
-export const DATABASE_PROVIDER = "d1" as const;
+import { drizzle } from "drizzle-orm/d1";
+import * as schema from "./schema";
 
 export function getDb() {
-  return createD1Database();
+  // В Cloudflare Workers env доступен через глобальный объект
+  const db = (globalThis as any).DB;
+  if (!db) {
+    throw new Error("Серверная база данных временно недоступна.");
+  }
+  return drizzle(db, { schema });
 }
