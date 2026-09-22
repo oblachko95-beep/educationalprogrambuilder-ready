@@ -1,5 +1,5 @@
 import { getDb } from "@/db";
-import { authUsers, userProfiles } from "@/db/schema";
+import { authUsers, userProfiles, authSessions } from "@/db/schema";
 import bcrypt from "bcryptjs";
 
 export const dynamic = "force-dynamic";
@@ -18,12 +18,10 @@ export async function POST(request: Request) {
     const userId = crypto.randomUUID();
     const passwordHash = await bcrypt.hash(password, 12);
     
-    // Проверяем админа
     const adminEmails = (process.env.INITIAL_ADMIN_EMAIL || "").split(",").map(e => e.trim().toLowerCase());
     const isAdmin = adminEmails.includes(email.toLowerCase());
     const role = isAdmin ? "admin" : "author";
 
-    // Создаём пользователя
     await db.insert(authUsers).values({
       id: userId,
       email: email.toLowerCase(),
@@ -33,7 +31,6 @@ export async function POST(request: Request) {
       updatedAt: now,
     });
 
-    // Создаём профиль
     await db.insert(userProfiles).values({
       userId,
       displayName: displayName || email,
@@ -45,11 +42,8 @@ export async function POST(request: Request) {
       updatedAt: now,
     });
 
-    // Создаём сессию
     const token = crypto.randomUUID();
     const expiresAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
-    
-    // Хэшируем токен
     const encoder = new TextEncoder();
     const data = encoder.encode(token);
     const hashBuffer = await crypto.subtle.digest("SHA-256", data);
